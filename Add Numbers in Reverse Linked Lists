@@ -1,0 +1,96 @@
+You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+Output: 7 -> 0 -> 8
+
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+   
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        int num1 = 0;
+        int num2 = 0;
+        int num = 0, val = 0;
+        int carry = 0;
+        
+        ListNode *curr = NULL, *lnode = NULL, *first = NULL;
+        ListNode *head1 = l1,*tail1 = l1, *head2 = l2,*tail2 = l2;
+        bool done1 = false, done2 = false;
+        
+        while(tail1->next!= NULL)
+            tail1 = tail1->next;
+        
+        while(tail2->next!= NULL)
+            tail2 = tail2->next;
+        
+        
+        while((!done1) || (!done2) )
+        {
+            num1 = 0;
+            num2 = 0;
+            num = 0;
+            
+            if(!done1) {
+                
+                if(head1 == tail1) {
+                    done1 = true;
+                    num1 = tail1->val;
+                }
+                else {
+                    num1 = head1->val;
+                    head1 = head1->next;
+                }
+                
+            }
+            
+            if(!done2) {
+                if(head2 == tail2) {
+                    done2 = true;
+                     num2 = tail2->val;
+                }
+                else {
+                    num2 = head2->val;
+                    head2 = head2->next;
+                }
+            }
+            
+            num  = num1 + num2 + carry;
+            val = num%10; 
+            num = num/10;
+            carry = num%10;        
+            
+            lnode = (ListNode *)malloc(sizeof(ListNode));
+            lnode->val = val;
+            lnode->next = NULL;
+            
+            if(first == NULL)
+                    first = lnode;
+            else
+                    curr->next = lnode;
+            
+            curr = lnode;
+
+        }
+        if(carry !=0 ){
+                        
+            lnode = (ListNode *)malloc(sizeof(ListNode));
+            lnode->val = carry;
+            lnode->next = NULL;
+            curr->next = lnode;
+        }
+        
+        return first;
+        
+    }
+};
