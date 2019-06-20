@@ -1,0 +1,44 @@
+class Solution {
+    
+    List<Integer> order(int[][] A, int m, int n,int dir, List<Integer> list, int l) {
+   
+        System.out.println(list);
+        if(list.size() == ((m+1)*(n+1)))
+            return list;
+        
+        if (dir == 1) {
+            for(int i = l ; i<=m-l ; i++) {
+                list.add(A[l][i]);
+            }
+            return order(A, m, n, 2, list, l);
+            
+        } else if (dir == 2) {
+            for(int j = l+1 ; j<=n-l ; j++) {
+                list.add(A[j][m-l]);
+            }
+            return order(A, m, n, 3, list, l);
+            
+        } else if (dir == 3) {
+            for(int i = m-l-1 ; i>=l ; i--) {
+                list.add(A[n-l][i]);
+            }
+            return order(A, m, n, 4, list, l);
+            
+        } else {
+            for(int j = n-l-1 ; j>l ; j--) {
+                list.add(A[j][l]);
+            }
+            return order(A, m, n, 1, list, ++l);
+            
+        }
+        
+    }
+    
+    
+    public List<Integer> spiralOrder(int[][] matrix) {
+        
+        if(matrix.length == 0)
+            return new ArrayList<Integer>();
+        return order(matrix, matrix[0].length-1,matrix.length-1, 1, new ArrayList<Integer>(), 0);
+    }
+}

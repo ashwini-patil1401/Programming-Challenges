@@ -1,0 +1,58 @@
+
+import javafx.util.Pair;
+class LRUCache {
+    
+    LinkedList<Pair<Integer,Integer>> map;
+    int size = 0;
+    int capacity = 0;
+
+    public LRUCache(int capacity) {
+        map = new LinkedList<Pair<Integer,Integer>>();
+        this.capacity = capacity;
+    }
+    
+    public int get(int key) {
+        int count = 0;
+        for(Pair<Integer,Integer> iter : map){
+            if(iter.getKey() == key){
+                if(count > 0){
+                    map.remove(count);
+                    map.addFirst(new Pair(iter.getKey(),iter.getValue()));
+                }
+       
+                return iter.getValue();
+            }
+            count++;
+        }
+        return -1;
+    }
+    
+    public void put(int key, int value) {
+        int count = 0;
+         for(Pair<Integer,Integer> iter : map) {
+         
+                    if(iter.getKey() == key){
+                    map.remove(count);
+                    map.addFirst(new Pair(key,value));
+                    
+                    return;
+            }
+                     ++count;
+         }
+        
+        if(size == capacity){
+            map.removeLast();
+            --size;
+        }
+        
+        map.addFirst(new Pair<Integer,Integer>(key,value));
+        ++size;
+    }
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
