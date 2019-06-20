@@ -1,0 +1,64 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+
+class Meta{
+     TreeNode node;
+     int level;
+    
+     Meta(TreeNode n, int l){
+        node = n;
+        level = l;
+    }
+}
+class Solution {
+    
+    List<List<Integer>> traverse(TreeNode root){
+        Queue<Meta> q = new LinkedList<>();
+        List<List<Integer>> list = new ArrayList<>();
+        
+        q.add(new Meta(root, 0));
+        
+        while(!q.isEmpty()) {
+            Meta m = q.poll();
+            
+            if(list.size()>=(m.level+1)) {
+                LinkedList<Integer> linkedlist = new LinkedList<>(list.get(m.level));
+                if(m.level%2 == 0)
+                    linkedlist.addLast(m.node.val);
+                else
+                    linkedlist.addFirst(m.node.val);
+                list.set(m.level, linkedlist);
+            } else {
+                LinkedList<Integer> linkedlist = new LinkedList<>();
+                if(m.level%2 == 0)
+                    linkedlist.addLast(m.node.val);
+                else
+                    linkedlist.addFirst(m.node.val);
+                list.add(linkedlist);
+            }
+            
+            if(m.node.left!=null) {
+                q.add(new Meta (m.node.left, (m.level + 1)));
+            }
+
+            if(m.node.right!=null) {
+                q.add( new Meta (m.node.right, (m.level + 1)));
+            }
+        } 
+        return list;
+    }
+    
+    
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        if(root == null)
+            return new ArrayList<>();
+        return traverse(root);
+    }
+}
