@@ -1,0 +1,25 @@
+/*
+Input: [3,0,1]
+Output: 2
+*/
+import java.util.*;
+class Solution {
+    public int missingNumber(int[] nums) {
+        int len = nums.length;
+        TreeSet<Integer> setnums = new TreeSet<>();
+        
+        for(int i=0; i<=len; i++) {
+            setnums.add(i);
+        }
+        
+        for(int i:nums) {
+            setnums.remove(i);
+        }
+        
+        if(!setnums.isEmpty()) {
+            return (Integer)setnums.last();
+        }
+        
+        return 0;
+    }
+}
