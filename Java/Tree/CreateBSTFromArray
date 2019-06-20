@@ -1,0 +1,70 @@
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+
+    TreeNode(int val){
+        this.val = val;
+        left = null;
+        right = null;
+    }
+}
+
+class BST{
+    TreeNode root = null;
+
+    void insert(int k, TreeNode node){
+
+        if(root == null ){
+            root = new TreeNode(k);
+        } else {
+
+            if(node.val< k) {
+                if (node.right == null) {
+                    node.right = new TreeNode(k);
+                } else {
+                    insert(k, node.right);
+                }
+            }
+
+            if(node.val > k) {
+                if(node.left == null){
+                    node.left = new TreeNode(k);
+                } else {
+                    insert(k,node.left);
+                }
+            }
+
+        }
+    }
+
+    boolean search(int k, TreeNode node){
+
+        if(null != node) {
+            if (node.val == k) {
+                return true;
+            } else if (node.val < k) {
+                    return search(k, node.right);
+                } else {
+                    return search(k, node.left);
+                }
+
+        }
+        return  false;
+
+    }
+}
+
+public class CreateBSTFromArray {
+    public  static void main(String args[]){
+        int arr[] = new int[]{16,1,5,17,91,2,3};
+        BST tree = new BST();
+
+        for(int i : arr){
+            tree.insert(i,tree.root );
+        }
+
+       boolean res =  tree.search(3, tree.root);
+        System.out.println("3 is present : " + res);
+    }
+}
