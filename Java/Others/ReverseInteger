@@ -1,0 +1,26 @@
+class Solution {
+    public int reverse(int x) {
+        StringBuffer r  = new StringBuffer(""+x);
+        boolean h = false;
+        
+        if(x < 0){
+            h = true;
+            x = x*(-1);
+        }
+        
+        while(x>0)){
+            r = r.(""+ x%10);
+            x = x/10;
+        }
+        
+        if(h){
+            r = r.insert(0,"-");
+        }
+        
+        if(Integer.MAX_VALUE >= Math.abs(Long.parseLong(r.toString())))
+        return Integer.parseInt(r.toString());
+        
+        return 0;
+        
+    }
+}
